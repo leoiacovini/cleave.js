@@ -422,12 +422,14 @@ var cleaveReactClass = CreateReactClass({
         var owner = this;
         // eslint-disable-next-line
         var { value, options, onKeyDown, onFocus, onBlur, onChange, onInit, htmlRef, component, ...propsToTransfer } = owner.props;
+
         
         if (component) {
+            console.log('Using Component: ',  component)
             return (
-                <component
-                    type="text"
-                    ref={function (ref) {
+                React.createElement(component, {
+                    type: 'text',
+                    ref: function (ref) {
                         owner.element = ref;
     
                         if (!htmlRef) {
@@ -435,14 +437,14 @@ var cleaveReactClass = CreateReactClass({
                         }
     
                         htmlRef.apply(this, arguments);
-                    }}
-                    value={owner.state.value}
-                    onKeyDown={owner.onKeyDown}
-                    onChange={owner.onChange}
-                    onFocus={owner.onFocus}
-                    onBlur={owner.onBlur}
-                    {...propsToTransfer}
-                />
+                    },
+                    value: owner.state.value,
+                    onKeyDown: owner.onKeyDown,
+                    onChange: owner.onChange,
+                    onFocus: owner.onFocus,
+                    onBlur: owner.onBlur,
+                    ...propsToTransfer
+                })
             );
         }
 
